@@ -38,6 +38,16 @@ export class AccountingService {
     this.updateAccounts();
   }
 
+  editAccount(oldAccName: string, newAccount: Account) {
+    this.app.editAccount(oldAccName, newAccount);
+    this.updateAccounts();
+  }
+
+  deleteAccount(acc: Account) {
+    this.app.deleteAccount(acc.Name);
+    this.updateAccounts();
+  }
+
   getAccounts(): Account[] {
     return this.app.getAccounts();
   }
