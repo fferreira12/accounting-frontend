@@ -20,4 +20,12 @@ export class AccountListComponent implements OnInit {
     })
   }
 
+  onSaveAccount(acc: {oldName: string, newAccount:Account}) {
+    this.accountService.editAccount(acc.oldName, acc.newAccount);
+  }
+
+  onDeleteAccount(account: Account) {
+    this.accountService.deleteAccount(account);
+  }
+
 }

@@ -1,1 +1,10 @@
-<li class="list-group-item">{{account.Name}} <span class="badge badge-primary ml-auto">{{account.AccountType | accountType}}</span></li>
+<li class="list-group-item d-flex align-items-center mt-2">{{account.Name}} 
+  <span class="badge badge-primary ml-2">{{account.AccountType | accountType}}</span>
+  <button class="btn btn-warning btn-sm ml-auto" (click)="onEditAccount()">Edit</button>
+  <button class="btn btn-danger btn-sm ml-2" (click)="onDeleteAccount()">Delete</button>
+</li>
+<div class="card" *ngIf="editing">
+  <div class="card-body">
+  <app-account-add [account]="account" (save)="onSaveAccount($event)"></app-account-add>
+</div>
+</div>

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { AccountType } from '@fferreira/accounting';
+import { AccountType, Account } from '@fferreira/accounting';
 import { AccountingService } from '@core/services/accounting.service';
 
 @Component({
@@ -16,17 +16,38 @@ export class AccountAddComponent implements OnInit {
   accountName: string = "";
   accountType: AccountType;
 
+  @Input() account: Account;
+  @Output() save: EventEmitter<{oldName: string, newAccount: Account}> = new EventEmitter();
+  @Output() create: EventEmitter<Account> = new EventEmitter();
+
   constructor(
     private accountingService: AccountingService
   ) { }
 
   ngOnInit() {
+    if(this.account) {
+      this.accountName = this.account.Name;
+      this.accountType = this.account.AccountType;
+    }
   }
 
-  onAddAccount() {
-    this.accountingService.addAccount(this.accountName, this.accountType);
-    this.accountName = "";
-    this.accountType = null;
+  onCreateOrEdit() {
+    if(!this.account) {
+      let acc = new Account(this.accountName, this.accountType);
+      this.create.emit(acc);
+      this.accountingService.addAccount(acc.Name, acc.AccountType);
+      this.accountName = "";
+      this.accountType = null;
+    } else {
+      let d = {
+        oldName: this.account.Name, 
+        newAccount: new Account(this.accountName, this.accountType)
+      }
+      this.save.emit({
+        oldName: this.account.Name, 
+        newAccount: new Account(this.accountName, this.accountType)
+      });
+    }
   }
 
 }
