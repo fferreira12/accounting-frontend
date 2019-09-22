@@ -3,16 +3,23 @@ import { CommonModule } from "@angular/common";
 import { AccountListComponent } from "./account-list/account-list.component";
 import { AccountAddComponent } from "./account-add/account-add.component";
 import { AccountItemComponent } from "./account-list/account-item/account-item.component";
-import { SharedModule } from '@shared/shared.module';
-import { FormsModule }   from '@angular/forms';
+import { SharedModule } from "@shared/shared.module";
+import { FormsModule } from "@angular/forms";
+import { TransactionAddComponent } from "./transaction-add/transaction-add.component";
 
 @NgModule({
   declarations: [
     AccountListComponent,
     AccountAddComponent,
-    AccountItemComponent
+    AccountItemComponent,
+    TransactionAddComponent
   ],
   imports: [CommonModule, FormsModule, SharedModule],
-  exports: [AccountListComponent, AccountAddComponent, AccountItemComponent]
+  exports: [
+    AccountListComponent,
+    AccountAddComponent,
+    AccountItemComponent,
+    TransactionAddComponent
+  ]
 })
 export class AccountingModule {}

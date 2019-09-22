@@ -1,0 +1,10 @@
+.autocomplete {
+  background: #eee;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.autocomplete p {
+  padding: 0 10px;
+}
