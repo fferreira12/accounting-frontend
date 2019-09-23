@@ -1,13 +1,45 @@
-<form class="form" autocomplete="off">
-  <div class="form-row">
-    <div class="col" clickOutside (clickOutside)="toggleAutocomplete()">
-      <input type="text" name="accountName" id="" class="form-control" placeholder="Account" (focus)="toggleAutocomplete()" [(ngModel)]="searchTerm"> 
-      <div class="autocomplete" *ngIf="showAutocomplete" >
-        <p *ngFor="let acc of allAccounts | searchFilter: getSearchValue()" (click)="selectAccount(acc)">{{acc.Name}}</p>
-      </div>
+<!-- <form (ngSubmit)="onAddTransaction()" [formGroup]="transactionForm">
+  <div class="row" *ngFor="let item of transactionForm.get('item') as FormArray; let i=index">
+    <div class="col">
+      <select class="form-control" name="acc1" required [formControl]="transactionForm.get('items')[i]">
+        <option value=""></option>
+        <option [value]="acc.Name" *ngFor="let acc of allAccounts">{{acc.Name}}</option>
+      </select>
     </div>
     <div class="col">
-      <input type="number" name="accountValue" id="" class="form-control" placeholder="Amount">
+      <input type="number" name="value1" id="" class="form-control" ngModel required>
+    </div>
+  </div>
+
+  <button class="btn btn-primary" type="submit">Add Transaction</button>
+</form> -->
+
+<form (ngSubmit)="onAddTransaction()" [formGroup]="transactionForm">
+  <div class="row">
+    <button type="button" class="btn btn-warning col-sm" (click)="onAddItem()">Add item</button>
+    <button class="btn btn-primary col-sm" type="submit">Add Transaction</button>
+  </div>
+  <div formArrayName="items">
+    <div class="list-group" *ngFor="let item of items.controls; let i=index">
+      <!-- The repeated alias template -->
+      <div class="list-group-item" [formGroup]="items.controls[i]">
+          <!-- <input class="form-control" type="text" formControlName="account"> -->
+          <div class="row d-flex flex-row justify-content-between">
+              <div class="col">
+                  <select class="form-control" required formControlName="account">
+                    <option value=""></option>
+                    <option [value]="acc.Name" *ngFor="let acc of allAccounts">{{acc.Name}}</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <input class="form-control" type="number" formControlName="value">
+                </div>
+                <div class="col">
+                  <button class="btn btn-danger" (click)="onRemoveItem(i)">X</button>
+                </div>
+          </div>
+      </div>
     </div>
   </div>
 </form>
+

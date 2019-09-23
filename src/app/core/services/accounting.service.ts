@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
-import { Accounting, AccountType, Account } from "@fferreira/accounting";
-import { Subject } from "rxjs";
+import { Accounting, AccountType, Account, Transaction } from "@fferreira/accounting";
+import { Subject, throwError } from "rxjs";
+import { TransactionAddComponent } from 'src/app/accounting/transaction-add/transaction-add.component';
 
 @Injectable({
   providedIn: "root"
@@ -9,10 +10,13 @@ export class AccountingService {
   app: Accounting;
   accounts: Account[];
   accountsSubject: Subject<Account[]>;
+  transactions: Transaction[];
+  transactionsSubject: Subject<Transaction[]>;
 
   constructor() {
     this.app = new Accounting();
     this.accountsSubject = new Subject<Account[]>();
+    this.transactionsSubject = new Subject<Transaction[]>();
 
     // TEST DATA
     
@@ -22,10 +26,27 @@ export class AccountingService {
       this.app.createAccount('credit card to pay', AccountType.LIABILITY);
       this.app.createAccount('food expense', AccountType.EXPENSE);
       this.app.createAccount('market expense', AccountType.EXPENSE);
+
+      this.addTransaction({
+        date: new Date(2019, 1, 1),
+        items: [
+          {account: 'non alocated', value: -5000},
+          {account: 'salary income', value: 5000}
+        ]
+      });
+
+      this.addTransaction({
+        date: new Date(2019, 1, 2),
+        items: [
+          {account: 'food expense', value: -50},
+          {account: 'non alocated', value: 50}
+        ]
+      });
     
     // END TEST DATA
 
     this.updateAccounts();
+    this.updateTransactions();
   }
 
   updateAccounts() {
@@ -56,5 +77,22 @@ export class AccountingService {
 
   subscribeToAccount(subscriber: (accs: Account[]) => void) {
     this.accountsSubject.subscribe(subscriber);
+  }
+
+  addTransaction(transaction: Transaction) {
+    this.app.addTransaction(transaction)
+  }
+
+  deleteTransaction(transaction: Transaction) {
+    throw new Error('deleteTransaction not implemented yet');
+  }
+
+  subscribeToTransactions(subscriber: (accs: Transaction[]) => void) {
+    this.transactionsSubject.subscribe(subscriber);
+  }
+
+  updateTransactions() {
+    this.transactions = this.app.getTransactions();
+    this.transactionsSubject.next(this.transactions);
   }
 }

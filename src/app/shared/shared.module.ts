@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AccountTypePipe } from './pipes/account-type.pipe';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { FilterPipe } from './pipes/filter.pipe';
+import { SortPipe } from './pipes/sort.pipe';
 
 
 
@@ -11,7 +12,8 @@ import { FilterPipe } from './pipes/filter.pipe';
   declarations: [
     AccountTypePipe,
     ClickOutsideDirective,
-    FilterPipe
+    FilterPipe,
+    SortPipe
   ],
   imports: [
     CommonModule
@@ -19,7 +21,8 @@ import { FilterPipe } from './pipes/filter.pipe';
   exports: [
     AccountTypePipe, 
     ClickOutsideDirective,
-    FilterPipe
+    FilterPipe,
+    SortPipe
   ]
 })
 export class SharedModule { }

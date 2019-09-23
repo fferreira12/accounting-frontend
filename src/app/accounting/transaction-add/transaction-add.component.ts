@@ -1,35 +1,66 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input } from "@angular/core";
+import { FormBuilder, FormArray, FormGroup } from "@angular/forms";
 
-import { Account } from '@fferreira/accounting';
+import { Account, Transaction } from "@fferreira/accounting";
+import { AccountingService } from "@core/services/accounting.service";
 
 @Component({
-  selector: 'app-transaction-add',
-  templateUrl: './transaction-add.component.html',
-  styleUrls: ['./transaction-add.component.css']
+  selector: "app-transaction-add",
+  templateUrl: "./transaction-add.component.html",
+  styleUrls: ["./transaction-add.component.css"]
 })
 export class TransactionAddComponent implements OnInit {
-
-  searchTerm: string = "";
-
   @Input() allAccounts: Account[];
-  showAutocomplete = false;
+  transactionForm: FormGroup;
 
-  constructor() { }
+  constructor(
+    private fb: FormBuilder,
+    private accountingService: AccountingService
+  ) {}
 
   ngOnInit() {
+    this.transactionForm = this.fb.group({
+      items: this.fb.array([
+        this.fb.group({
+          account: this.fb.control("TEST"),
+          value: this.fb.control(10)
+        })
+      ])
+    });
   }
 
-  toggleAutocomplete() {
-    this.showAutocomplete = !this.showAutocomplete;
+  get items() {
+    return this.transactionForm.get("items") as FormArray;
   }
 
-  getSearchValue() {
-    return this.searchTerm;
+  onAddItem() {
+    this.items.push(
+      this.fb.group({
+        account: this.fb.control(""),
+        value: this.fb.control(0)
+      })
+    );
   }
 
-  selectAccount(acc: Account) {
-    this.searchTerm = acc.Name;
-    this.toggleAutocomplete();
+  onRemoveItem(index: number) {
+    this.items.removeAt(index);
   }
 
+  onAddTransaction() {
+    let v: {account: string, value: number}[] = this.items.value;
+    let t: Transaction = {
+      date: new Date(),
+      items: [],
+      description: ''
+    }
+    v.forEach(item => {
+      t.items.push({
+        account: item.account, 
+        value: item.value
+      })
+    })
+    console.log(t);
+    
+    this.accountingService.addTransaction(t);
+  }
 }
