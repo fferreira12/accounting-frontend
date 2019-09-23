@@ -6,20 +6,23 @@ import { AccountItemComponent } from "./account-list/account-item/account-item.c
 import { SharedModule } from "@shared/shared.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { TransactionAddComponent } from "./transaction-add/transaction-add.component";
+import { TransactionListComponent } from './transaction-list/transaction-list.component';
 
 @NgModule({
   declarations: [
     AccountListComponent,
     AccountAddComponent,
     AccountItemComponent,
-    TransactionAddComponent
+    TransactionAddComponent,
+    TransactionListComponent
   ],
   imports: [CommonModule, FormsModule, SharedModule, ReactiveFormsModule],
   exports: [
     AccountListComponent,
     AccountAddComponent,
     AccountItemComponent,
-    TransactionAddComponent
+    TransactionAddComponent,
+    TransactionListComponent
   ]
 })
 export class AccountingModule {}

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Accounting, AccountType, Account, Transaction } from "@fferreira/accounting";
-import { Subject, throwError } from "rxjs";
+import { Subject, throwError, BehaviorSubject } from "rxjs";
 import { TransactionAddComponent } from 'src/app/accounting/transaction-add/transaction-add.component';
 
 @Injectable({
@@ -9,14 +9,14 @@ import { TransactionAddComponent } from 'src/app/accounting/transaction-add/tran
 export class AccountingService {
   app: Accounting;
   accounts: Account[];
-  accountsSubject: Subject<Account[]>;
+  accountsSubject: BehaviorSubject<Account[]>;
   transactions: Transaction[];
   transactionsSubject: Subject<Transaction[]>;
 
   constructor() {
     this.app = new Accounting();
-    this.accountsSubject = new Subject<Account[]>();
-    this.transactionsSubject = new Subject<Transaction[]>();
+    this.accountsSubject = new BehaviorSubject<Account[]>([]);
+    this.transactionsSubject = new BehaviorSubject<Transaction[]>([]);
 
     // TEST DATA
     
@@ -83,11 +83,15 @@ export class AccountingService {
     this.app.addTransaction(transaction)
   }
 
+  getTransactions() {
+    return this.app.getTransactions();
+  }
+
   deleteTransaction(transaction: Transaction) {
     throw new Error('deleteTransaction not implemented yet');
   }
 
-  subscribeToTransactions(subscriber: (accs: Transaction[]) => void) {
+  subscribeToTransactions(subscriber: (trans: Transaction[]) => void) {
     this.transactionsSubject.subscribe(subscriber);
   }
 
