@@ -65,8 +65,6 @@ export class AccountingService {
   }
 
   editAccount(oldAccName: string, newAccount: Account) {
-    console.log({oldAccName, newAccount});
-    
     this.app.editAccount(oldAccName, newAccount);
     this.updateAccounts();
   }

@@ -79,7 +79,6 @@ export class TransactionAddComponent implements OnInit {
         value: item.value
       })
     })
-    console.log(t);
     
     if(this.transaction) {
       //this.accountingService.updateTransaction(this.transaction.id, t);
