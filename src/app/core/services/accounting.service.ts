@@ -54,6 +54,11 @@ export class AccountingService {
     this.accountsSubject.next(this.accounts);
   }
 
+  updatetransactions() {
+    this.transactions = this.app.getTransactions();
+    this.transactionsSubject.next(this.transactions);
+  }
+
   addAccount(name: string, accType: AccountType) {
     this.app.createAccount(name, accType);
     this.updateAccounts();
@@ -88,7 +93,8 @@ export class AccountingService {
   }
 
   deleteTransaction(transaction: Transaction) {
-    throw new Error('deleteTransaction not implemented yet');
+    this.app.deleteTransaction(transaction);
+    this.updateTransactions();
   }
 
   subscribeToTransactions(subscriber: (trans: Transaction[]) => void) {

@@ -25,4 +25,8 @@ export class TransactionListComponent implements OnInit {
 
   }
 
+  onDeleteTransaction(transaction: Transaction) {
+    this.accountingService.deleteTransaction(transaction);
+  }
+
 }
