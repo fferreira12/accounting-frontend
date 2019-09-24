@@ -22,8 +22,12 @@ export class TransactionAddComponent implements OnInit {
     this.transactionForm = this.fb.group({
       items: this.fb.array([
         this.fb.group({
-          account: this.fb.control("TEST"),
-          value: this.fb.control(10)
+          account: this.fb.control(""),
+          value: this.fb.control(0)
+        }),
+        this.fb.group({
+          account: this.fb.control(""),
+          value: this.fb.control(0)
         })
       ])
     });

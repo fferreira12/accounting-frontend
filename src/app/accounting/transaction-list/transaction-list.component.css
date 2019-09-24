@@ -1,0 +1,11 @@
+.list-group-item p {
+  margin-bottom: 0;
+}
+
+.list-group-item span {
+  font-weight: bold;
+}
+
+li {
+  margin-bottom: 0.5em;
+}

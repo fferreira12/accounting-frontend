@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountingService } from '@core/services/accounting.service';
+import * as moment from 'moment'
+
 import { Transaction } from '@fferreira/accounting';
 
 @Component({

@@ -2,9 +2,8 @@
 
 <ul class="list-group">
     <li *ngFor="let transaction of transactions" class="list-group-item">
-      <p>{{transaction.date}}</p>
-      <p *ngFor="let item of transaction.items">{{item.account}}: {{item.value | currency:'BRL'}}</p>
+      <p>{{transaction.date | date:'dd/MM/yyyy'}}</p>
+      <p *ngFor="let item of transaction.items"><span>{{item.account}}</span>: {{item.value | currency:'BRL'}}</p>
       <p *ngIf="transaction.description">{{transaction.description}}</p>
     </li>
   </ul>
-  
