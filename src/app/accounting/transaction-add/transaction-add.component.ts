@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { FormBuilder, FormArray, FormGroup } from "@angular/forms";
 
 import { Account, Transaction } from "@fferreira/accounting";
@@ -13,24 +13,40 @@ export class TransactionAddComponent implements OnInit {
   @Input() allAccounts: Account[];
   transactionForm: FormGroup;
 
+  //transaction being edited
+  @Input() transaction: Transaction;
+  @Output() save: EventEmitter<{transactionId: string, newTransaction: Transaction}>;
+
   constructor(
     private fb: FormBuilder,
     private accountingService: AccountingService
-  ) {}
+  ) {
+    this.save = new EventEmitter<{transactionId: string, newTransaction: Transaction}>();
+  }
 
   ngOnInit() {
     this.transactionForm = this.fb.group({
-      items: this.fb.array([
-        this.fb.group({
-          account: this.fb.control(""),
-          value: this.fb.control(0)
-        }),
-        this.fb.group({
-          account: this.fb.control(""),
-          value: this.fb.control(0)
-        })
-      ])
+      date: this.fb.control(new Date()),
+      items: this.fb.array([])
     });
+
+    if(!this.transaction) {
+      this.items.push(this.fb.group({
+        account: this.fb.control(""),
+        value: this.fb.control(0)
+      })),
+      this.items.push(this.fb.group({
+        account: this.fb.control(""),
+        value: this.fb.control(0)
+      }))
+    } else {
+      this.transaction.items.forEach(item => {
+        this.items.push(this.fb.group({
+          account: this.fb.control(item.account),
+          value: this.fb.control(item.value)
+        }))
+      })
+    }
   }
 
   get items() {
@@ -53,7 +69,7 @@ export class TransactionAddComponent implements OnInit {
   onAddTransaction() {
     let v: {account: string, value: number}[] = this.items.value;
     let t: Transaction = {
-      date: new Date(),
+      date: this.transactionForm.controls.date.value,
       items: [],
       description: ''
     }
@@ -65,6 +81,14 @@ export class TransactionAddComponent implements OnInit {
     })
     console.log(t);
     
-    this.accountingService.addTransaction(t);
+    if(this.transaction) {
+      //this.accountingService.updateTransaction(this.transaction.id, t);
+      this.save.emit({
+        transactionId: this.transaction.id,
+        newTransaction: t
+      })
+    } else {
+      this.accountingService.addTransaction(t);
+    }
   }
 }

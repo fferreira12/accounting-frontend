@@ -6,7 +6,11 @@
       <p *ngFor="let item of transaction.items"><span>{{item.account}}</span>: {{item.value | currency:'BRL'}}</p>
       <p *ngIf="transaction.description">{{transaction.description}}</p>
       <p>
+        <button class="btn btn-warning" (click)="onStartEditTransaction(transaction)">Edit</button>
         <button class="btn btn-danger" (click)="onDeleteTransaction(transaction)">X</button>
       </p>
+      <div *ngIf="editingTransaction && transaction == editingTransaction">
+        <app-transaction-add [allAccounts]="getAllAccounts()" [transaction]="transaction" (save)="onUpdateTransaction($event)"></app-transaction-add>
+      </div>
     </li>
   </ul>

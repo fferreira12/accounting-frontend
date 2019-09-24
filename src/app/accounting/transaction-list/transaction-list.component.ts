@@ -12,6 +12,7 @@ import { Transaction } from '@fferreira/accounting';
 export class TransactionListComponent implements OnInit {
 
   transactions: Transaction[];
+  editingTransaction: Transaction;
 
   constructor(
     private accountingService: AccountingService
@@ -25,8 +26,25 @@ export class TransactionListComponent implements OnInit {
 
   }
 
+  getAllAccounts() {
+    return this.accountingService.getAccounts();
+  }
+
+  onStartEditTransaction(t: Transaction) {
+    if(this.editingTransaction == t) {
+      this.editingTransaction = undefined;
+    } else {
+      this.editingTransaction = t;
+    }
+  }
+
   onDeleteTransaction(transaction: Transaction) {
     this.accountingService.deleteTransaction(transaction);
+  }
+
+  onUpdateTransaction(update: {transactionId: string, newTransaction: Transaction}) {
+    this.accountingService.updateTransaction(update.transactionId, update.newTransaction);
+    this.editingTransaction = undefined;
   }
 
 }

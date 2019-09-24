@@ -97,6 +97,11 @@ export class AccountingService {
     this.updateTransactions();
   }
 
+  updateTransaction(transactionId: string, transaction: Transaction) {
+    this.app.updateTransaction(transactionId, transaction);
+    this.updateTransactions();
+  }
+
   subscribeToTransactions(subscriber: (trans: Transaction[]) => void) {
     this.transactionsSubject.subscribe(subscriber);
   }
