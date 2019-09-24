@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Accounting, AccountType, Account, Transaction } from "@fferreira/accounting";
-import { Subject, throwError, BehaviorSubject } from "rxjs";
-import { TransactionAddComponent } from 'src/app/accounting/transaction-add/transaction-add.component';
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
   providedIn: "root"
@@ -11,7 +10,7 @@ export class AccountingService {
   accounts: Account[];
   accountsSubject: BehaviorSubject<Account[]>;
   transactions: Transaction[];
-  transactionsSubject: Subject<Transaction[]>;
+  transactionsSubject: BehaviorSubject<Transaction[]>;
 
   constructor() {
     this.app = new Accounting();
