@@ -1,5 +1,10 @@
 import { Injectable } from "@angular/core";
-import { Accounting, AccountType, Account, Transaction } from "@fferreira/accounting";
+import {
+  Accounting,
+  AccountType,
+  Account,
+  Transaction
+} from "@fferreira/accounting";
 import { BehaviorSubject } from "rxjs";
 
 @Injectable({
@@ -12,36 +17,49 @@ export class AccountingService {
   transactions: Transaction[];
   transactionsSubject: BehaviorSubject<Transaction[]>;
 
+  //filters
+  startDate: Date;
+  endDate: Date;
+  accountNameFilter: string;
+
   constructor() {
     this.app = new Accounting();
     this.accountsSubject = new BehaviorSubject<Account[]>([]);
     this.transactionsSubject = new BehaviorSubject<Transaction[]>([]);
 
     // TEST DATA
-    
-      this.app.createAccount('non alocated', AccountType.ASSET);
-      this.app.createAccount('credit card reserve', AccountType.ASSET);
-      this.app.createAccount('salary income', AccountType.REVENUE);
-      this.app.createAccount('credit card to pay', AccountType.LIABILITY);
-      this.app.createAccount('food expense', AccountType.EXPENSE);
-      this.app.createAccount('market expense', AccountType.EXPENSE);
 
-      this.addTransaction({
-        date: new Date(2019, 1, 1),
-        items: [
-          {account: 'non alocated', value: -5000},
-          {account: 'salary income', value: 5000}
-        ]
-      });
+    this.app.createAccount("non alocated", AccountType.ASSET);
+    this.app.createAccount("credit card reserve", AccountType.ASSET);
+    this.app.createAccount("salary income", AccountType.REVENUE);
+    this.app.createAccount("credit card to pay", AccountType.LIABILITY);
+    this.app.createAccount("food expense", AccountType.EXPENSE);
+    this.app.createAccount("market expense", AccountType.EXPENSE);
 
-      this.addTransaction({
-        date: new Date(2019, 1, 2),
-        items: [
-          {account: 'food expense', value: -50},
-          {account: 'non alocated', value: 50}
-        ]
-      });
-    
+    this.addTransaction({
+      date: new Date(2019, 8, 22),
+      items: [
+        { account: "non alocated", value: -5000 },
+        { account: "salary income", value: 5000 }
+      ]
+    });
+
+    this.addTransaction({
+      date: new Date(2019, 8, 24),
+      items: [
+        { account: "food expense", value: -50 },
+        { account: "non alocated", value: 50 }
+      ]
+    });
+
+    this.addTransaction({
+      date: new Date(2019, 8, 26),
+      items: [
+        { account: "market expense", value: -50 },
+        { account: "food expense", value: 50 }
+      ]
+    });
+
     // END TEST DATA
 
     this.updateAccounts();
@@ -82,7 +100,7 @@ export class AccountingService {
   }
 
   addTransaction(transaction: Transaction) {
-    this.app.addTransaction(transaction)
+    this.app.addTransaction(transaction);
   }
 
   getTransactions() {
@@ -106,5 +124,41 @@ export class AccountingService {
   updateTransactions() {
     this.transactions = this.app.getTransactions();
     this.transactionsSubject.next(this.transactions);
+  }
+
+  addFilters(start?: Date, end?: Date, accountName?: string) {
+    this.startDate = start;
+    this.endDate = end;
+    this.accountNameFilter = accountName;
+  }
+
+  getFilteredTransactions() {
+    if(!this.startDate && !this.endDate && !this.accountNameFilter) {
+      //console.log('return all transactions');
+      
+      return this.transactions;
+    }
+    console.log('return intersection');
+    console.log(this);
+    
+    
+    return this.intersection(
+      this.app.filterTransactionsByAccount(this.accountNameFilter),
+      this.app.filterTransactionsByDate(this.startDate, this.endDate)
+    );
+  }
+
+  private intersection(
+    arr1: Transaction[],
+    arr2: Transaction[]
+  ): Transaction[] {
+    if (!arr1 || !arr2 || arr1.length == 0 || arr2.length == 0) {
+      return [];
+    }
+    return arr1.filter(x => {
+      return arr2.some(y => {
+        return x.id === y.id;
+      });
+    });
   }
 }
