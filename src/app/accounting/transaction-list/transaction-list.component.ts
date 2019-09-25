@@ -39,18 +39,18 @@ export class TransactionListComponent implements OnInit {
 
     //filter form
     this.filters.valueChanges.subscribe(val => {
-
-      let start = val.startDate ? this.parseDate(val.startDate) : null;
-      let end = val.endDate ? this.parseDate(val.endDate) : null;
-
-      this.accountingService.addFilters(start, end, val.accountSelected);
-
-      this.filteredTrasactions = this.accountingService.getFilteredTransactions();
-
+      this.updateFilteredTransactions(val);
     });
   }
 
+  updateFilteredTransactions(filter) {
+    let start = filter.startDate ? this.parseDate(filter.startDate) : null;
+    let end = filter.endDate ? this.parseDate(filter.endDate) : null;
 
+    this.accountingService.addFilters(start, end, filter.accountSelected);
+
+    this.filteredTrasactions = this.accountingService.getFilteredTransactions();
+  }
 
   private parseDate(dateStr: string) {
     let year = parseInt(dateStr.split("-")[0]);
@@ -73,6 +73,7 @@ export class TransactionListComponent implements OnInit {
 
   onDeleteTransaction(transaction: Transaction) {
     this.accountingService.deleteTransaction(transaction);
+    this.filteredTrasactions = this.accountingService.getFilteredTransactions();
   }
 
   onUpdateTransaction(update: {
@@ -84,5 +85,6 @@ export class TransactionListComponent implements OnInit {
       update.newTransaction
     );
     this.editingTransaction = undefined;
+    this.filteredTrasactions = this.accountingService.getFilteredTransactions();
   }
 }

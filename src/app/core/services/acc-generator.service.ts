@@ -23,7 +23,8 @@ export class AccGeneratorService {
 
       let t = {
         date: this.randomDate(new Date(2015, 5, 1), new Date(2019, 11, 1)),
-        items: []
+        items: [],
+        description: "Transaction number " + (i+1) + " of " + transactions
       };
 
       let val = Math.random() * 5000;

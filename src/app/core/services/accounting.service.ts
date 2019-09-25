@@ -137,12 +137,8 @@ export class AccountingService {
 
   getFilteredTransactions() {
     if(!this.startDate && !this.endDate && !this.accountNameFilter) {
-      //console.log('return all transactions');
-      
       return this.transactions;
     }
-    console.log('return intersection');
-    console.log(this);
     
     
     return this.intersection(
