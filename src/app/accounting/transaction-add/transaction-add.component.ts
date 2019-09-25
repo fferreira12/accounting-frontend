@@ -26,6 +26,7 @@ export class TransactionAddComponent implements OnInit {
 
   ngOnInit() {
     this.transactionForm = this.fb.group({
+      description: this.fb.control(''),
       date: this.fb.control(new Date()),
       items: this.fb.array([])
     });
@@ -69,9 +70,9 @@ export class TransactionAddComponent implements OnInit {
   onAddTransaction() {
     let v: {account: string, value: number}[] = this.items.value;
     let t: Transaction = {
+      description: this.transactionForm.controls.description.value,
       date: this.transactionForm.controls.date.value,
       items: [],
-      description: ''
     }
     v.forEach(item => {
       t.items.push({

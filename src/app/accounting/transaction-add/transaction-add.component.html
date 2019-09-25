@@ -18,9 +18,10 @@
   <div class="row">
     <button type="button" class="btn btn-warning col-sm" (click)="onAddItem()">Add item</button>
     <button class="btn btn-primary col-sm" type="submit">{{transaction ? "Save" : "Add Transaction"}}</button>
-    <input class="form-control col-sm" type="date" formControlName="date" [value]="transaction?.date | date:'yyyy-MM-dd'">
   </div>
-  <div>
+  <div class="row">
+    <input class="form-control col-sm-4" type="date" formControlName="date" [value]="transaction?.date | date:'yyyy-MM-dd'">
+    <input class="form-control col-sm" type="text" formControlName="description" placeholder="Transaction description" [value]="transaction?.description">
   </div>
   <div formArrayName="items">
     <div class="list-group" *ngFor="let item of items.controls; let i=index">
