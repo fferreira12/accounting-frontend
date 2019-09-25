@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AccountingModule } from '../accounting/accounting.module';
+import { AccGeneratorService } from './services/acc-generator.service';
 
 
 
@@ -9,7 +10,10 @@ import { AccountingModule } from '../accounting/accounting.module';
   imports: [
     CommonModule, 
     AccountingModule
-  ], 
+  ],
+  providers: [
+    AccGeneratorService
+  ],
   exports: [
     AccountingModule
   ]
