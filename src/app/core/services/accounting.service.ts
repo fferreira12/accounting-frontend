@@ -147,6 +147,10 @@ export class AccountingService {
     );
   }
 
+  getBalances() {
+    return this.app.getAllBalances();
+  }
+
   private intersection(
     arr1: Transaction[],
     arr2: Transaction[]

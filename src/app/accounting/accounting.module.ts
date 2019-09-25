@@ -6,7 +6,8 @@ import { AccountItemComponent } from "./account-list/account-item/account-item.c
 import { SharedModule } from "@shared/shared.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { TransactionAddComponent } from "./transaction-add/transaction-add.component";
-import { TransactionListComponent } from './transaction-list/transaction-list.component';
+import { TransactionListComponent } from "./transaction-list/transaction-list.component";
+import { BalanceListComponent } from "./balance-list/balance-list.component";
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { TransactionListComponent } from './transaction-list/transaction-list.co
     AccountAddComponent,
     AccountItemComponent,
     TransactionAddComponent,
-    TransactionListComponent
+    TransactionListComponent,
+    BalanceListComponent
   ],
   imports: [CommonModule, FormsModule, SharedModule, ReactiveFormsModule],
   exports: [
@@ -22,7 +24,8 @@ import { TransactionListComponent } from './transaction-list/transaction-list.co
     AccountAddComponent,
     AccountItemComponent,
     TransactionAddComponent,
-    TransactionListComponent
+    TransactionListComponent,
+    BalanceListComponent
   ]
 })
 export class AccountingModule {}

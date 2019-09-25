@@ -1,0 +1,7 @@
+<h1>Balances</h1>
+
+<ul class="list-group" *ngIf="balances">
+  <li class="list-group-item" *ngFor="let b of balances">
+    <span>{{b.account}}</span>: {{b.balance | currency:"BRL"}}
+  </li>
+</ul>
