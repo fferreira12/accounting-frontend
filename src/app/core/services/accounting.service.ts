@@ -26,7 +26,8 @@ export class AccountingService {
   constructor(
     private accGenerator: AccGeneratorService
   ) {
-    this.app = this.accGenerator.getApp(15, 50);
+    //this.app = this.accGenerator.getApp(15, 50);
+    this.app = new Accounting();
     this.accountsSubject = new BehaviorSubject<Account[]>([]);
     this.transactionsSubject = new BehaviorSubject<Transaction[]>([]);
 
@@ -67,6 +68,14 @@ export class AccountingService {
 
     this.updateAccounts();
     this.updateTransactions();
+  }
+
+  setApp(app: Accounting) {
+    this.app = app;
+    this.updateAccounts();
+    this.updatetransactions();
+    console.log('account service app was updated');
+    
   }
 
   updateAccounts() {

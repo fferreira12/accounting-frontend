@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { TransactionAddComponent } from "./transaction-add/transaction-add.component";
 import { TransactionListComponent } from "./transaction-list/transaction-list.component";
 import { BalanceListComponent } from "./balance-list/balance-list.component";
+import { ExcelImporterComponent } from './excel-importer/excel-importer.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { BalanceListComponent } from "./balance-list/balance-list.component";
     AccountItemComponent,
     TransactionAddComponent,
     TransactionListComponent,
-    BalanceListComponent
+    BalanceListComponent,
+    ExcelImporterComponent
   ],
   imports: [CommonModule, FormsModule, SharedModule, ReactiveFormsModule],
   exports: [
@@ -25,7 +27,8 @@ import { BalanceListComponent } from "./balance-list/balance-list.component";
     AccountItemComponent,
     TransactionAddComponent,
     TransactionListComponent,
-    BalanceListComponent
+    BalanceListComponent,
+    ExcelImporterComponent
   ]
 })
 export class AccountingModule {}
