@@ -22,10 +22,6 @@ export class AccountListComponent implements OnInit {
     })
   }
 
-  get totalPages() {
-    return Math.round(this.accounts.length / this.itemsPerPage);
-  }
-
   onPageChange(page: number) {
     this.currentPage = page;
   }

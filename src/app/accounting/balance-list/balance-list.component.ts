@@ -20,11 +20,9 @@ export class BalanceListComponent implements OnInit {
       this.updateBalances(this.accountingService.getBalances());
     });
 
-    console.log(this.balances);
   }
 
   updateBalances(balances: { [s: string]: number }) {
-    console.log(balances);
     
     this.balances = [];
     for (var key in balances) {

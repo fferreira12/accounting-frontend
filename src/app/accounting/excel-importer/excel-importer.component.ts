@@ -33,7 +33,6 @@ export class ExcelImporterComponent implements OnInit {
   ngOnInit() {}
 
   onFileSelect(fileEvent) {
-    console.log(fileEvent);
     //this.excelFile = fileEvent.files[0];
     this.fileEvent = fileEvent;
   }
@@ -82,7 +81,7 @@ export class ExcelImporterComponent implements OnInit {
 
     });
 
-    console.log(app);
+    //console.log(app);
     
 
     return app;

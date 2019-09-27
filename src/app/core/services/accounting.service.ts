@@ -74,7 +74,7 @@ export class AccountingService {
     this.app = app;
     this.updateAccounts();
     this.updatetransactions();
-    console.log('account service app was updated');
+    //console.log('account service app was updated');
     
   }
 
