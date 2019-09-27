@@ -1,3 +1,4 @@
-<ul class="list-group" *ngFor="let acc of accounts">
+<app-pagination (pageChange)="onPageChange($event)" [(totalPages)]="totalPages"></app-pagination>
+<ul class="list-group" *ngFor="let acc of accounts | pagination:itemsPerPage:currentPage">
   <app-account-item [account]="acc" (save)="onSaveAccount($event)" (delete)="onDeleteAccount($event)"></app-account-item>
 </ul>

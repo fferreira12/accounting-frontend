@@ -11,17 +11,22 @@ import { FormControl, FormGroup } from "@angular/forms";
   styleUrls: ["./transaction-list.component.css"]
 })
 export class TransactionListComponent implements OnInit {
-  transactions: Transaction[];
+  transactions: Transaction[] = [];
   editingTransaction: Transaction;
   accounts: Account[];
 
   //filters
-  filteredTrasactions: Transaction[];
+  filteredTrasactions: Transaction[] = [];
   filters = new FormGroup({
     startDate: new FormControl(null),
     endDate: new FormControl(null),
     accountSelected: new FormControl(null)
   });
+
+  //pagination
+  itemsPerPage: number = 20;
+  currentPage = 1;
+  _totalPages: number = Math.round(this.filteredTrasactions.length / this.itemsPerPage);
 
   constructor(private accountingService: AccountingService) {}
 
@@ -30,7 +35,7 @@ export class TransactionListComponent implements OnInit {
     this.filteredTrasactions = this.transactions;
     this.accountingService.subscribeToTransactions(trans => {
       this.transactions = trans;
-      //this.filteredTrasactions = trans;
+      this.filteredTrasactions = trans;
     });
     this.accounts = this.accountingService.getAccounts();
     this.accountingService.subscribeToAccount(accs => {
@@ -86,5 +91,17 @@ export class TransactionListComponent implements OnInit {
     );
     this.editingTransaction = undefined;
     this.filteredTrasactions = this.accountingService.getFilteredTransactions();
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+  }
+
+  get totalPages() {
+    return Math.round(this.filteredTrasactions.length / this.itemsPerPage);
+  }
+
+  set totalPages(value: number) {
+    this._totalPages = value;
   }
 }

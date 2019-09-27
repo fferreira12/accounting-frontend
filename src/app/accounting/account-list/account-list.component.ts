@@ -10,6 +10,8 @@ import { AccountingService } from '@core/services/accounting.service';
 export class AccountListComponent implements OnInit {
 
   accounts: Account[];
+  itemsPerPage = 15;
+  currentPage = 1;
 
   constructor(private accountService: AccountingService) { }
 
@@ -18,6 +20,14 @@ export class AccountListComponent implements OnInit {
     this.accountService.subscribeToAccount(accs => {
       this.accounts = accs;
     })
+  }
+
+  get totalPages() {
+    return Math.round(this.accounts.length / this.itemsPerPage);
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
   }
 
   onSaveAccount(acc: {oldName: string, newAccount:Account}) {

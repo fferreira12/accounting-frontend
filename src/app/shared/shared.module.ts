@@ -4,6 +4,8 @@ import { AccountTypePipe } from './pipes/account-type.pipe';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { FilterPipe } from './pipes/filter.pipe';
 import { SortPipe } from './pipes/sort.pipe';
+import { PaginationPipe } from './pipes/pagination.pipe';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 
 
@@ -13,7 +15,9 @@ import { SortPipe } from './pipes/sort.pipe';
     AccountTypePipe,
     ClickOutsideDirective,
     FilterPipe,
-    SortPipe
+    SortPipe,
+    PaginationPipe,
+    PaginationComponent
   ],
   imports: [
     CommonModule
@@ -22,7 +26,9 @@ import { SortPipe } from './pipes/sort.pipe';
     AccountTypePipe, 
     ClickOutsideDirective,
     FilterPipe,
-    SortPipe
+    SortPipe,
+    PaginationPipe,
+    PaginationComponent
   ]
 })
 export class SharedModule { }
