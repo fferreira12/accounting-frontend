@@ -20,7 +20,8 @@ export class ExcelImporterComponent implements OnInit {
     creditAccountColumn: "F",
     dateColumn: "B",
     valueColumn: "G",
-    descriptionColumn: "L"
+    descriptionColumn: "L",
+    multilineColumn: "M"
   };
   //excelFile: File = null;
   fileEvent = null;
@@ -59,7 +60,6 @@ export class ExcelImporterComponent implements OnInit {
     let accounts = this.getAcccounts(this.config);
     let transactions = this.getTransactions(this.config);
 
-    // console.log({ accounts, transactions });
 
     accounts.forEach(acc => {
       try {
@@ -76,7 +76,7 @@ export class ExcelImporterComponent implements OnInit {
           date: this.excelDateToJSDate(trans.date)
         });
       } catch (e) {
-        console.log('Error adding transaction', trans);
+        console.error('Error adding transaction', e);
       }
 
     });
@@ -169,7 +169,17 @@ export class ExcelImporterComponent implements OnInit {
     let value = 0;
     let date = "";
     let description = "";
+    let multiline = "";
     let row = config.transactionStartRow;
+
+    let multilineTransaction: {
+      date: string;
+      items: {
+        account: string;
+        value: number;
+      }[];
+      description?: string;
+    } = null;
 
     do {
       debitedAcc = this.readCell(
@@ -181,23 +191,52 @@ export class ExcelImporterComponent implements OnInit {
         config.creditAccountColumn + row
       );
       value = this.readCell(transactionSheet, config.valueColumn + row);
+      
       date = this.readCell(transactionSheet, config.dateColumn + row);
       description = this.readCell(
         transactionSheet,
         config.descriptionColumn + row
       );
+      multiline = this.readCell(transactionSheet, config.multilineColumn + row);
+
+      if(!value) {
+        row++;
+        continue;
+      }
 
       if (description && description !== "") {
         let t = {
           date: date,
           description: description,
-          items: [
-            { account: debitedAcc, value: -1 * value },
-            { account: creditedAcc, value: value }
-          ]
+          items: []
         };
+        //console.log({debitedAcc, creditedAcc});
+        
+        if(multiline == "m" && multilineTransaction == null) {
+          multilineTransaction = t;
+          if(debitedAcc) {
+            multilineTransaction.items.push({ account: debitedAcc, value: -1 * value });
+          }
+          if(creditedAcc) {
+            multilineTransaction.items.push({ account: creditedAcc, value: value })
+          }
+        } else if(multiline == "m" && multilineTransaction != null) {
+          if(debitedAcc) {
+            multilineTransaction.items.push({ account: debitedAcc, value: -1 * value });
+          }
+          if(creditedAcc) {
+            multilineTransaction.items.push({ account: creditedAcc, value: value })
+          }
+        } else {
+          if(multilineTransaction !== null) {
+            transactions.push(multilineTransaction);
+            multilineTransaction = null;
+          }
+          t.items.push({ account: debitedAcc, value: -1 * value });
+          t.items.push({ account: creditedAcc, value: value });
+          transactions.push(t);
+        }
 
-        transactions.push(t);
       }
 
       row++;
