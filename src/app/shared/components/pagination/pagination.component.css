@@ -1,4 +1,9 @@
-a {
+li a {
   color: #007bff;
   cursor: pointer;
+}
+
+.page-item {
+  min-width: 3em;
+  text-align: center;
 }

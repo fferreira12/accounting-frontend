@@ -35,7 +35,7 @@ export class TransactionListComponent implements OnInit {
     this.filteredTrasactions = this.transactions;
     this.accountingService.subscribeToTransactions(trans => {
       this.transactions = trans;
-      this.filteredTrasactions = trans;
+      this.filteredTrasactions = this.transactions;
     });
     this.accounts = this.accountingService.getAccounts();
     this.accountingService.subscribeToAccount(accs => {
