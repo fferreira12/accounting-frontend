@@ -1,5 +1,5 @@
 <h2>Transactions</h2>
-<app-pagination (pageChange)="onPageChange($event)" [(totalItems)]="transactions.length" [(itemsPerPage)]="itemsPerPage"></app-pagination>
+<app-pagination (pageChange)="onPageChange($event)" [(totalItems)]="filteredTrasactions.length" [(itemsPerPage)]="itemsPerPage"></app-pagination>
 
 <div class="filters" [formGroup]="filters">
   <label>Start Date:
