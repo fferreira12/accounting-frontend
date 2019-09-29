@@ -32,7 +32,7 @@ export class AccountingService {
     this.transactionsSubject = new BehaviorSubject<Transaction[]>([]);
 
     // TEST DATA
-    /*
+    
     this.app.createAccount("non alocated", AccountType.ASSET);
     this.app.createAccount("credit card reserve", AccountType.ASSET);
     this.app.createAccount("salary income", AccountType.REVENUE);
@@ -63,7 +63,7 @@ export class AccountingService {
         { account: "food expense", value: 50 }
       ]
     });
-    */
+    
     // END TEST DATA
 
     this.updateAccounts();
