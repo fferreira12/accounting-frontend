@@ -1,7 +1,16 @@
 <h1>Balances</h1>
 
-<ul class="list-group" *ngIf="balances">
-  <li class="list-group-item" *ngFor="let b of balances">
+<div class="filters">
+  <form class="form-inline" [formGroup]="filters">
+    <input class="form-control" type="text" name="accname" placeholder="Filter by name" formControlName="accName">
+    <label class="ml-2">
+      <input type="checkbox" name="hidezeros" formControlName="hideZeros"> Hide zeros
+    </label>
+  </form>
+</div>
+
+<ul class="list-group" *ngIf="filteredBalances">
+  <li class="list-group-item" *ngFor="let b of filteredBalances">
     <span>{{b.account}}</span>: {{b.balance | currency:"BRL"}}
   </li>
 </ul>
