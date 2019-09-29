@@ -1,5 +1,7 @@
 .list-group-item {
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .list-group-item p {
@@ -17,8 +19,9 @@ li {
 div.debit,
 div.credit {
   position: relative;
-  display: inline-block;
+  display: flex;
   width: 100%;
+  justify-content: space-between
 }
 
 div.debit {
@@ -27,27 +30,35 @@ div.debit {
 
 div.credit {
   color:green;
-  right: 0;
-  text-align: right;
+}
+
+div.account {
+  width: 40%;
+}
+
+div.account {
+  /* order: 2; */
+  text-align: left;
+}
+
+div.debit div.account {
+  order: 0;
 }
 
 div.date {
   text-align: center;
 }
 
-div.account,
 div.value {
-  display: inline-block;
-}
-
-div.debit div.account {
-  left: 0;
-}
-
-div.credit div.account {
-  right: 0;
+  flex-grow: 1;
 }
 
 div.value {
-  left: 40px;
+  text-align: right;
+  
+}
+
+div.credit div.value {
+  text-align: right;
+  
 }
