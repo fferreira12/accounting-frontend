@@ -1,3 +1,5 @@
+/* 
+
 .list-group-item {
   position: relative;
   display: flex;
@@ -37,7 +39,7 @@ div.account {
 }
 
 div.account {
-  /* order: 2; */
+  
   text-align: left;
 }
 
@@ -61,4 +63,68 @@ div.value {
 div.credit div.value {
   text-align: right;
   
+}
+ */
+
+body {
+  font-family: sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.transaction {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: no-wrap;
+  max-width: 100rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.description {
+  margin: 1rem 0;
+}
+
+.header {
+  font-weight: bold;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+}
+
+.item .value {
+  grid-column: 2 / 3;
+  /*   border: 1px solid red; */
+  /*   justify-self: end; */
+}
+
+.credit .value {
+  order: -1;
+}
+
+.debit .account {
+  grid-column: 1 / 2;
+}
+
+.credit .account {
+  grid-column: 3 / 4;
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.controls button {
+  margin: 1rem 0 0 1rem;
 }
