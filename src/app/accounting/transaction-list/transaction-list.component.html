@@ -20,24 +20,27 @@
 page)
 
 <ul class="list-group">
-  <li *ngFor="let transaction of filteredTrasactions | pagination:itemsPerPage:currentPage" class="list-group-item">
-
+  <div *ngFor="let transaction of filteredTrasactions | pagination:itemsPerPage:currentPage" class="transaction">
     <div class="date">{{transaction.date | date:'dd/MM/yyyy'}}</div>
-
-    <div *ngFor="let item of transaction.items" [ngClass]="{'debit': item.value < 0, 'credit': item.value > 0}">
-      <!-- <div class="void" *ngIf="item.value > 0"></div> -->
-      <div class="account" >{{item.account}}</div>
-      <div class="value">{{item.value | currency:'BRL'}}</div>
-      <!-- <div class="void" *ngIf="item.value < 0"></div> -->
+    <div class="description"  *ngIf="transaction.description">{{transaction.description}}</div>
+    <div class="items">
+      <div class="item header">
+        <div class="account">Debited Accounts</div>
+        <div class="value">Values</div>
+        <div class="account">Credited Accounts</div>
+      </div>
+      <div class="item" *ngFor="let item of transaction.items" [ngClass]="{'debit': item.value < 0, 'credit': item.value > 0}">
+        <div class="account">{{item.account}}</div>
+        <div class="value">{{item.value > 0 ? '&nbsp;' : ''}}{{item.value | currency:'BRL'}}</div>
+      </div>
     </div>
-    <div *ngIf="transaction.description">{{transaction.description}}</div>
-    <div>
+    <div class="controls">
+      <button class="btn btn-danger" (click)="onDeleteTransaction(transaction)">Delete</button>
       <button class="btn btn-warning" (click)="onStartEditTransaction(transaction)">Edit</button>
-      <button class="btn btn-danger" (click)="onDeleteTransaction(transaction)">X</button>
     </div>
     <div *ngIf="editingTransaction && transaction == editingTransaction">
       <app-transaction-add [allAccounts]="getAllAccounts()" [transaction]="transaction"
         (save)="onUpdateTransaction($event)"></app-transaction-add>
     </div>
-  </li>
+  </div>
 </ul>
