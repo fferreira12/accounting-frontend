@@ -11,6 +11,6 @@
 
 <ul class="list-group" *ngIf="filteredBalances">
   <li class="list-group-item" *ngFor="let b of filteredBalances">
-    <span>{{b.account}}</span>: {{b.balance | currency:"BRL"}}
+    <span class="account">{{b.account}}:</span><span>{{b.balance | currency:"BRL"}}</span>
   </li>
 </ul>
