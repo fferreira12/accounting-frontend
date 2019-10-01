@@ -16,7 +16,7 @@ export class TransactionListComponent implements OnInit {
   accounts: Account[];
 
   //filters
-  filteredTrasactions: Transaction[] = [];
+  filteredTransactions: Transaction[] = [];
   filters = new FormGroup({
     startDate: new FormControl(null),
     endDate: new FormControl(null),
@@ -26,16 +26,19 @@ export class TransactionListComponent implements OnInit {
   //pagination
   itemsPerPage: number = 20;
   currentPage = 1;
-  _totalPages: number = Math.round(this.filteredTrasactions.length / this.itemsPerPage);
+  _totalPages: number = Math.round(this.filteredTransactions.length / this.itemsPerPage);
 
   constructor(private accountingService: AccountingService) {}
 
   ngOnInit() {
     this.transactions = this.accountingService.getTransactions();
-    this.filteredTrasactions = this.transactions;
+    this.filteredTransactions = this.transactions;
     this.accountingService.subscribeToTransactions(trans => {
+      console.log('got new transactions', trans);
+      
       this.transactions = trans;
-      this.filteredTrasactions = this.transactions;
+      this.filteredTransactions = [];
+      this.updateFilteredTransactions();
     });
     this.accounts = this.accountingService.getAccounts();
     this.accountingService.subscribeToAccount(accs => {
@@ -48,13 +51,15 @@ export class TransactionListComponent implements OnInit {
     });
   }
 
-  updateFilteredTransactions(filter) {
+  updateFilteredTransactions(filter = this.filters.value) {
     let start = filter.startDate ? this.parseDate(filter.startDate) : null;
     let end = filter.endDate ? this.parseDate(filter.endDate) : null;
 
     this.accountingService.addFilters(start, end, filter.accountSelected);
 
-    this.filteredTrasactions = this.accountingService.getFilteredTransactions();
+    this.filteredTransactions = this.accountingService.getFilteredTransactions();
+
+    console.log(this.filteredTransactions)
   }
 
   private parseDate(dateStr: string) {
@@ -78,7 +83,7 @@ export class TransactionListComponent implements OnInit {
 
   onDeleteTransaction(transaction: Transaction) {
     this.accountingService.deleteTransaction(transaction);
-    this.filteredTrasactions = this.accountingService.getFilteredTransactions();
+    this.filteredTransactions = this.accountingService.getFilteredTransactions();
   }
 
   onUpdateTransaction(update: {
@@ -90,7 +95,7 @@ export class TransactionListComponent implements OnInit {
       update.newTransaction
     );
     this.editingTransaction = undefined;
-    this.filteredTrasactions = this.accountingService.getFilteredTransactions();
+    this.filteredTransactions = this.accountingService.getFilteredTransactions();
   }
 
   onPageChange(page: number) {
@@ -102,7 +107,7 @@ export class TransactionListComponent implements OnInit {
   }
 
   get totalPages() {
-    return Math.round(this.filteredTrasactions.length / this.itemsPerPage);
+    return Math.round(this.filteredTransactions.length / this.itemsPerPage);
   }
 
   set totalPages(value: number) {

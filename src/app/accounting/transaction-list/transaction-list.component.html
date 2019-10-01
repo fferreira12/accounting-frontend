@@ -1,8 +1,8 @@
 <h2>Transactions</h2>
 
-<app-transaction-add></app-transaction-add>
+<app-transaction-add [allAccounts]="accounts"></app-transaction-add>
 
-<app-pagination (pageChange)="onPageChange($event)" [(totalItems)]="filteredTrasactions.length"
+<app-pagination (pageChange)="onPageChange($event)" [(totalItems)]="filteredTransactions.length"
   [(itemsPerPage)]="itemsPerPage"></app-pagination>
 
 <div class="filters" [formGroup]="filters">
@@ -25,11 +25,11 @@
   <!-- AUTO COMPLETE -->
 
 </div>
-<span>Showing {{filteredTrasactions.length}} of {{transactions.length}} transactions</span> ({{itemsPerPage}} items per
+<span>Showing {{filteredTransactions.length}} of {{transactions.length}} transactions</span> ({{itemsPerPage}} items per
 page)
 
 <ul class="list-group">
-  <div *ngFor="let transaction of filteredTrasactions | pagination:itemsPerPage:currentPage" class="transaction">
+  <div *ngFor="let transaction of filteredTransactions | pagination:itemsPerPage:currentPage" class="transaction">
     <div class="date">{{transaction.date | date:'dd/MM/yyyy'}}</div>
     <div class="description" *ngIf="transaction.description">{{transaction.description}}</div>
     <div class="items">

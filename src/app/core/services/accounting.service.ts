@@ -113,6 +113,7 @@ export class AccountingService {
 
   addTransaction(transaction: Transaction) {
     this.app.addTransaction(transaction);
+    this.transactionsSubject.next(this.transactions);
   }
 
   getTransactions() {
