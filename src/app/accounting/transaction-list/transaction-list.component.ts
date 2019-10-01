@@ -34,8 +34,6 @@ export class TransactionListComponent implements OnInit {
     this.transactions = this.accountingService.getTransactions();
     this.filteredTransactions = this.transactions;
     this.accountingService.subscribeToTransactions(trans => {
-      console.log('got new transactions', trans);
-      
       this.transactions = trans;
       this.filteredTransactions = [];
       this.updateFilteredTransactions();
@@ -58,8 +56,6 @@ export class TransactionListComponent implements OnInit {
     this.accountingService.addFilters(start, end, filter.accountSelected);
 
     this.filteredTransactions = this.accountingService.getFilteredTransactions();
-
-    console.log(this.filteredTransactions)
   }
 
   private parseDate(dateStr: string) {
