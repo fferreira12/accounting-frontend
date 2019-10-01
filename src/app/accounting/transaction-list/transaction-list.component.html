@@ -1,4 +1,7 @@
 <h2>Transactions</h2>
+
+<app-transaction-add></app-transaction-add>
+
 <app-pagination (pageChange)="onPageChange($event)" [(totalItems)]="filteredTrasactions.length"
   [(itemsPerPage)]="itemsPerPage"></app-pagination>
 
