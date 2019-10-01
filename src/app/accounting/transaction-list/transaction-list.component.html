@@ -18,6 +18,12 @@
       <option [value]="account.Name" *ngFor="let account of accounts">{{account.Name}}</option>
     </select>
   </label>
+
+  <!-- AUTO COMPLETE -->
+  <br />
+  <app-auto-complete [items]="accounts | mapProperty:'accountName'" (selected)="onSelectAccount($event)"></app-auto-complete>
+  <!-- AUTO COMPLETE -->
+
 </div>
 <span>Showing {{filteredTrasactions.length}} of {{transactions.length}} transactions</span> ({{itemsPerPage}} items per
 page)
@@ -25,14 +31,15 @@ page)
 <ul class="list-group">
   <div *ngFor="let transaction of filteredTrasactions | pagination:itemsPerPage:currentPage" class="transaction">
     <div class="date">{{transaction.date | date:'dd/MM/yyyy'}}</div>
-    <div class="description"  *ngIf="transaction.description">{{transaction.description}}</div>
+    <div class="description" *ngIf="transaction.description">{{transaction.description}}</div>
     <div class="items">
       <div class="item header">
         <div class="account">Debited Accounts</div>
         <div class="value">Values</div>
         <div class="account">Credited Accounts</div>
       </div>
-      <div class="item" *ngFor="let item of transaction.items" [ngClass]="{'debit': item.value < 0, 'credit': item.value > 0}">
+      <div class="item" *ngFor="let item of transaction.items"
+        [ngClass]="{'debit': item.value < 0, 'credit': item.value > 0}">
         <div class="account">{{item.account}}</div>
         <div class="value">{{item.value > 0 ? '&nbsp;' : ''}}{{item.value | currency:'BRL'}}</div>
       </div>

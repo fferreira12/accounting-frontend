@@ -1,0 +1,4 @@
+<input type="text" class="form-control" [(ngModel)]="itemFilter">
+<ul *ngIf="itemFilter && itemFilter !== '' && showList" >
+  <li *ngFor="let item of items | searchFilter:itemFilter" (click)="onSelecItem(item)">{{item}}</li>
+</ul>

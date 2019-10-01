@@ -97,6 +97,10 @@ export class TransactionListComponent implements OnInit {
     this.currentPage = page;
   }
 
+  onSelectAccount(accountName: string) {
+    this.filters.patchValue({accountSelected: accountName});
+  }
+
   get totalPages() {
     return Math.round(this.filteredTrasactions.length / this.itemsPerPage);
   }

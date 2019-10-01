@@ -6,6 +6,9 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { SortPipe } from './pipes/sort.pipe';
 import { PaginationPipe } from './pipes/pagination.pipe';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { AutoCompleteComponent } from './components/auto-complete/auto-complete.component';
+import { MapPropertyPipe } from './pipes/map-property.pipe';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -17,10 +20,13 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     FilterPipe,
     SortPipe,
     PaginationPipe,
-    PaginationComponent
+    PaginationComponent,
+    AutoCompleteComponent,
+    MapPropertyPipe
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ], 
   exports: [
     AccountTypePipe, 
@@ -28,7 +34,9 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     FilterPipe,
     SortPipe,
     PaginationPipe,
-    PaginationComponent
+    PaginationComponent,
+    AutoCompleteComponent,
+    MapPropertyPipe
   ]
 })
 export class SharedModule { }
